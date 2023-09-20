@@ -1,8 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:scraper_v1/pages/text_controler.dart';
-
 import '../dio/api_servise.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -77,7 +79,6 @@ class _MainScreenState extends State<MainScreen> {
         showColumnHeaders = true;
       });
     } catch (error) {
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -111,7 +112,77 @@ class _MainScreenState extends State<MainScreen> {
           children: <Widget>[
             ListTile(
               title: const Text(AppStrings.firsMenu),
-              onTap: () {
+              onTap: () async {
+                try {
+                  // Получите доступ к экземпляру Firestore
+                  final FirebaseFirestore firestore =
+                      FirebaseFirestore.instance;
+
+                  // Создайте список для хранения данных, которые вы хотите сохранить
+                  List<Map<String, dynamic>> dataToSave = [];
+
+                  // Переберите элементы в klinesData и добавьте данные в список
+                  for (int i = 0; i < klinesData.length; i++) {
+                    Map<String, dynamic> kline = {
+                      'Open time': klinesData[i][0],
+                      'Open price': klinesData[i][1],
+                      'High price': klinesData[i][2],
+                      'Low price': klinesData[i][3],
+                      'Close price': klinesData[i][4],
+                      'Volume': klinesData[i][5],
+                      'Close time': klinesData[i][6],
+                      'Quote volume': klinesData[i][7],
+                      'Number of trades': klinesData[i][8],
+                      'Taker buy volume': klinesData[i][9],
+                      'Taker buy quote volume': klinesData[i][10],
+                    };
+                    dataToSave.add(kline);
+                  }
+
+                  // Выполните операцию добавления данных в Firestore
+                  await firestore
+                      .collection("ScraperData")
+                      .add({'data': dataToSave});
+
+                  // Если операция выполнена успешно, показать сообщение об успешном сохранении
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Success'),
+                        content:
+                            const Text('Data saved to Firestore successfully.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } catch (error) {
+                  // Если произошла ошибка, показать сообщение об ошибке
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: Text('An error occurred: $error'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
                 // Action performed when Menu Item 1 is selected
               },
             ),
@@ -200,5 +271,26 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> saveDataToFirestore(List<dynamic> data) async {
+    final CollectionReference collection =
+        FirebaseFirestore.instance.collection('your_collection_name');
+
+    for (var item in data) {
+      await collection.add({
+        'Open time': item[0],
+        'Open price': item[1],
+        'High price': item[2],
+        'Low price': item[3],
+        'Close price': item[4],
+        'Volume': item[5],
+        'Close time': item[6],
+        'Quote volume': item[7],
+        'Number of trades': item[8],
+        'Taker buy volume': item[9],
+        'Taker buy quote volume': item[10],
+      });
+    }
   }
 }
