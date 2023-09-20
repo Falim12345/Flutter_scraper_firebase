@@ -10,7 +10,7 @@ class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
@@ -114,6 +114,16 @@ class _MainScreenState extends State<MainScreen> {
               title: const Text(AppStrings.firsMenu),
               onTap: () async {
                 try {
+                  String symbol = symbolController.text;
+                  String? interval = selectedInterval;
+                  DateTime now =
+                      DateTime.now(); // Получаем текущую дату и время
+
+                  String documentName =
+                      '${now.toLocal()} - $symbol - $interval';
+                  documentName = documentName.replaceAll(' ',
+                      ' '); // Можно использовать другие символы вместо '_' при необходимости
+
                   // Получите доступ к экземпляру Firestore
                   final FirebaseFirestore firestore =
                       FirebaseFirestore.instance;
@@ -141,8 +151,9 @@ class _MainScreenState extends State<MainScreen> {
 
                   // Выполните операцию добавления данных в Firestore
                   await firestore
-                      .collection("ScraperData")
-                      .add({'data': dataToSave});
+                      .collection('ScraperData')
+                      .doc(documentName)
+                      .set({'data': dataToSave});
 
                   // Если операция выполнена успешно, показать сообщение об успешном сохранении
                   showDialog(

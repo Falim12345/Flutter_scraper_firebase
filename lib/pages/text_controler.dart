@@ -1,7 +1,7 @@
 class AppStrings {
   static const String appBarTitle = 'AppBar Title';
 
-  static const String firsMenu = 'feature1';
+  static const String firsMenu = 'Save data';
   static const String secondMenu = 'feature2';
 
   static const String symbolLabel = 'Symbol';
@@ -10,9 +10,9 @@ class AppStrings {
   static const String endTimeLabel = 'End Time';
   static const String limitLabel = 'Limit';
 
-  static const String errorTitle = 'Ошибка';
-  static const String errorMessagePrefix = 'Ошибка при выполнении запроса: ';
-  static const String errorButton = 'ОК';
+  static const String errorTitle = 'Error';
+  static const String errorMessagePrefix = 'Error executing the request: ';
+  static const String errorButton = 'OK';
   static const String fetchDataerrorButton = 'Fetch Data';
 
   static const List<String> columnHeaders = [
