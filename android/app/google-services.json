@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037175140904",
+    "project_id": "flutter-scraper",
+    "storage_bucket": "flutter-scraper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037175140904:android:495474dc7774b7f98a3b1d",
+        "android_client_info": {
+          "package_name": "com.example.scraper_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZMsd74fBV0_lF1ZHVsYnG_zgKAAr7Fss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
