@@ -122,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                   String documentName =
                       '${now.toLocal()} - $symbol - $interval';
                   documentName = documentName.replaceAll(' ',
-                      ' '); // Можно использовать другие символы вместо '_' при необходимости
+                      '_'); // Можно использовать другие символы вместо '_' при необходимости
 
                   // Получите доступ к экземпляру Firestore
                   final FirebaseFirestore firestore =
