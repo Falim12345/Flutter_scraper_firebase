@@ -62,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> fetchData() async {
     String symbol = symbolController.text;
     String interval = selectedInterval ?? '';
-    int limit = int.tryParse(limitController.text) ?? 500;
+    int limit = int.tryParse(limitController.text) ?? 1000;
     int startTime = selectedStartDate?.millisecondsSinceEpoch ?? 0;
     int endTime = selectedEndDate?.millisecondsSinceEpoch ?? 0;
 

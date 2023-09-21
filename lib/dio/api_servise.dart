@@ -6,7 +6,7 @@ Future<Response> performRequest({
   required String interval,
   int startTime = 0,
   int endTime = 0,
-  int limit = 500,
+  int limit = 1000,
 }) async {
   Dio dio = Dio();
 
